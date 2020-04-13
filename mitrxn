@@ -1,0 +1,418 @@
+CREATE or replace VIEW fcc_datamodel_views.v_fcc_mitrxn_test AS SELECT
+a.data_dump_dt
+,a.trxn_intrl_ref_id
+,a.trxn_type1_cd
+,a.trxn_type2_cd
+,a.fcc_src_sys_cd
+,a.fcc_src_cntry_cd
+,a.src_sys_cd
+,a.trxn_post_dt
+,a.trxn_dep_dt
+,a.trxn_base_am
+,a.bank_to_bank_trnfr_fl
+,a.prdct_risk_nb
+,a.chanl_risk_nb
+,a.trxn_chanl_cd
+,a.process_date
+,a.prcsng_batch_nm
+,a.fcc_src_tbl_nam
+,a.trxn_postg_tm
+,a.trxn_dep_tm
+,a.trxn_type3_cd
+,a.trxn_type4_cd
+,a.trxn_asset_class_cd
+,a.trxn_purp_cd
+,a.trxn_prdct_cd
+,a.trxn_adjst_cd
+,a.mantas_trxn_chanl_cd
+,a.trxn_prdct_sub_type_cd
+,a.trxn_chanl_risk_nb
+,a.trxn_chanl_geo_loc
+,a.trxn_chanl_loc_type
+,a.trxn_chanl_loc_id
+,a.trxn_chanl_loc_nm
+,a.trxn_chanl_loc_addr
+,a.bank_card_id_nb
+,a.trxn_entry_ntwk_logon_id
+,a.trxn_entry_user_intrl_id
+,a.rptng_crncy_cd
+,a.trxn_rptng_am
+,e.dbt_jrsdcn_cd
+,f.cdt_jrsdcn_cd
+,e.dbt_bus_dmn_list_tx
+,f.cdt_bus_dmn_list_tx
+,a.trxn_seq_id
+,a.fcc_src_trxn_intrl_ref_id
+,a.dbt_cdt_cd
+,a.trxn_type_cd
+,a.dbt_acct_intrl_id
+,a.fcc_src_dbt_acct_intrl_id
+,a.cdt_acct_intrl_id
+,a.fcc_src_cdt_acct_intrl_id
+,b.cdt_cust_intrl_id
+,d.dbt_cust_intrl_id
+,a.trxn_exctn_dt
+,a.trxn_exctn_tm
+,a.trxn_exctn_utc_dt
+,a.trxn_exctn_utc_tm
+,a.trxn_actvy_am
+FROM (SELECT
+ecm_a1_mitrxn.datadumpdt AS DATA_DUMP_DT,
+ecm_a1_mitrxn.trxnintrlrefid AS TRXN_INTRL_REF_ID,
+ecm_a1_mitrxn.trxntype1cd AS TRXN_TYPE1_CD,
+ecm_a1_mitrxn.trxntype2cd AS TRXN_TYPE2_CD,
+'MANTAS' AS FCC_SRC_SYS_CD,
+CASE WHEN SUBSTR(ecm_a1_mitrxn.prcsngbatchnm,3,6) ='DETICA' OR SUBSTR(ecm_a1_mitrxn.prcsngbatchnm,3,3) ='DLY' THEN SUBSTR(ecm_a1_mitrxn.trxnintrlrefid,1,2)
+WHEN ecm_a1_mitrxn.prcsngbatchnm = 'TRDPORT' OR ecm_a1_mitrxn.prcsngbatchnm ='TRDSAM' THEN SUBSTR(ecm_a1_mitrxn.srcsyscd,1,2)
+ELSE SUBSTR(ecm_a1_mitrxn.trxnintrlrefid,1,2) END AS FCC_SRC_CNTRY_CD,
+ecm_a1_mitrxn.srcsyscd AS SRC_SYS_CD,
+ecm_a1_mitrxn.trxnpostdt AS TRXN_POST_DT,
+ecm_a1_mitrxn.trxndepdt AS TRXN_DEP_DT,
+ecm_a1_mitrxn.trxnbaseam AS TRXN_BASE_AM,
+ecm_a1_mitrxn.banktobanktrnfrfl AS BANK_TO_BANK_TRNFR_FL,
+ecm_a1_mitrxn.prdctrisknb AS PRDCT_RISK_NB,
+ecm_a1_mitrxn.chanlrisknb AS CHANL_RISK_NB,
+ecm_a1_mitrxn.trxnchanlcd AS TRXN_CHANL_CD,
+ecm_a1_mitrxn.ods AS PROCESS_DATE,
+ecm_a1_mitrxn.prcsngbatchnm AS PRCSNG_BATCH_NM,
+'ECM_A1_MITRXN' AS FCC_SRC_TBL_NAM,
+ecm_a1_mitrxn.trxnpostgtm AS TRXN_POSTG_TM,
+ecm_a1_mitrxn.trxndeptm AS TRXN_DEP_TM,
+ecm_a1_mitrxn.trxntype3cd AS TRXN_TYPE3_CD,
+ecm_a1_mitrxn.trxntype4cd AS TRXN_TYPE4_CD,
+ecm_a1_mitrxn.mantastrxnassetclasscd AS TRXN_ASSET_CLASS_CD,
+ecm_a1_mitrxn.mantastrxnpurpcd AS TRXN_PURP_CD,
+ecm_a1_mitrxn.mantastrxnprdctcd AS TRXN_PRDCT_CD,
+ecm_a1_mitrxn.mantastrxnadjstcd AS TRXN_ADJST_CD,
+ecm_a1_mitrxn.mantastrxnchanlcd AS MANTAS_TRXN_CHANL_CD,
+ecm_a1_mitrxn.mantastrxnprdctsubtypecd AS TRXN_PRDCT_SUB_TYPE_CD,
+ecm_a1_mitrxn.mantastrxnchanlrisknb AS TRXN_CHANL_RISK_NB,
+ecm_a1_mitrxn.mantastrxnchanlgeoloc AS TRXN_CHANL_GEO_LOC,
+ecm_a1_mitrxn.mantastrxnchanlloctype AS TRXN_CHANL_LOC_TYPE,
+ecm_a1_mitrxn.mantastrxnchanllocid AS TRXN_CHANL_LOC_ID,
+ecm_a1_mitrxn.mantastrxnchanllocnm AS TRXN_CHANL_LOC_NM,
+ecm_a1_mitrxn.mantastrxnchanllocaddr AS TRXN_CHANL_LOC_ADDR,
+ecm_a1_mitrxn.bankcardidnb AS BANK_CARD_ID_NB,
+ecm_a1_mitrxn.trxnentryntwklogonid AS TRXN_ENTRY_NTWK_LOGON_ID,
+ecm_a1_mitrxn.trxnentryuserintrlid AS TRXN_ENTRY_USER_INTRL_ID,
+ecm_a1_mitrxn.rptngcrncycd AS RPTNG_CRNCY_CD,
+ecm_a1_mitrxn.trxnrptngam AS TRXN_RPTNG_AM,
+ecm_a1_mitrxn.fotrxnseqid AS TRXN_SEQ_ID,
+ecm_a1_mitrxn.trxnintrlrefid AS FCC_SRC_TRXN_INTRL_REF_ID,
+ecm_a1_mitrxn.initrolecd AS DBT_CDT_CD,
+'MI' AS TRXN_TYPE_CD,
+CASE 
+WHEN ecm_a1_mitrxn.remacctidtypecd IN ('IA') OR ecm_a1_mitrxn.remacctidtypecd IN ('IA') THEN ecm_a1_mitrxn.remacctid 
+ELSE NULL 
+END AS DBT_ACCT_INTRL_ID,
+CASE 
+WHEN ecm_a1_mitrxn.remacctidtypecd IN ('IA') or ecm_a1_mitrxn.remacctidtypecd IN ('IA') THEN ecm_a1_mitrxn.remacctid 
+ELSE NULL 
+END AS FCC_SRC_DBT_ACCT_INTRL_ID,
+CASE 
+WHEN ecm_a1_mitrxn.benefacctidtypecd IN ('IA') AND ecm_a1_mitrxn.benefacctid IS NOT NULL THEN ecm_a1_mitrxn.benefacctid 
+WHEN ecm_a1_mitrxn.scndbenefacctidtypecd IN ('IA') AND ecm_a1_mitrxn.scndbenefacctid IS NOT NULL THEN ecm_a1_mitrxn.scndbenefacctid 
+WHEN ecm_a1_mitrxn.benefacctidtypecd IN ('GL') AND ecm_a1_mitrxn.benefacctid IS NOT NULL THEN ecm_a1_mitrxn.benefacctid 
+WHEN ecm_a1_mitrxn.scndbenefacctidtypecd IN ('GL') AND ecm_a1_mitrxn.scndbenefacctid IS NOT NULL THEN ecm_a1_mitrxn.scndbenefacctid 
+ELSE NULL 
+END AS CDT_ACCT_INTRL_ID,
+CASE 
+WHEN ecm_a1_mitrxn.benefacctidtypecd IN ('IA') AND ecm_a1_mitrxn.benefacctid IS NOT NULL THEN ecm_a1_mitrxn.benefacctid 
+WHEN ecm_a1_mitrxn.scndbenefacctidtypecd IN ('IA') AND ecm_a1_mitrxn.scndbenefacctid IS NOT NULL THEN ecm_a1_mitrxn.scndbenefacctid 
+WHEN ecm_a1_mitrxn.benefacctidtypecd IN ('GL') AND ecm_a1_mitrxn.benefacctid IS NOT NULL THEN ecm_a1_mitrxn.benefacctid 
+WHEN ecm_a1_mitrxn.scndbenefacctidtypecd IN ('GL') AND ecm_a1_mitrxn.scndbenefacctid IS NOT NULL THEN ecm_a1_mitrxn.scndbenefacctid 
+ELSE NULL 
+END AS FCC_SRC_CDT_ACCT_INTRL_ID,
+ecm_a1_mitrxn.trxnissuedt AS TRXN_EXCTN_DT,
+ecm_a1_mitrxn.trxnissuetm AS TRXN_EXCTN_TM,
+ecm_a1_mitrxn.trxnissueutcdt AS TRXN_EXCTN_UTC_DT,
+ecm_a1_mitrxn.trxnissueutctm AS TRXN_EXCTN_UTC_TM,
+CASE
+WHEN ecm_a1_mitrxn.issuetrxnactvyam IS NOT NULL THEN ecm_a1_mitrxn.issuetrxnactvyam
+WHEN ecm_a1_mitrxn.issuetrxnactvyam IS NULL AND ecm_a1_mitrxn.deptrxnactvyam IS NOT NULL THEN ecm_a1_mitrxn.deptrxnactvyam
+WHEN ecm_a1_mitrxn.deptrxnactvyam IS NULL AND ecm_a1_mitrxn.remtrxnactvyam IS NOT NULL THEN ecm_a1_mitrxn.remtrxnactvyam
+WHEN ecm_a1_mitrxn.remtrxnactvyam IS NULL AND ecm_a1_mitrxn.beneftrxnactvyam IS NOT NULL THEN ecm_a1_mitrxn.beneftrxnactvyam
+WHEN ecm_a1_mitrxn.beneftrxnactvyam IS NULL THEN NULL 
+ELSE NULL
+END AS TRXN_ACTVY_AM
+FROM FCCV_MANTAS_A1_VIEWS.V_ECM_A1_MITRXN ECM_A1_MITRXN) A LEFT OUTER JOIN (SELECT ecm_a1_acct.acct_intrl_id AS ACCTINTRLID, ecm_a1_acct.prmry_cust_intrl_id AS CDT_CUST_INTRL_ID FROM t3_fcc_datamart_access.V_FCC_M_ACCT ECM_A1_ACCT) B ON a.cdt_acct_intrl_id = b.acctintrlid  LEFT OUTER JOIN (SELECT ecm_a1_acct.acct_intrl_id AS ACCTINTRLID, ecm_a1_acct.prmry_cust_intrl_id AS DBT_CUST_INTRL_ID FROM t3_fcc_datamart_access.V_FCC_M_ACCT ECM_A1_ACCT)D ON a.dbt_acct_intrl_id = d.acctintrlid LEFT OUTER JOIN (SELECT ecm_a1_cust.cust_intrl_id AS CUSTINTRLID, ecm_a1_cust.jrsdcn_cd AS DBT_JRSDCN_CD, ecm_a1_cust.bus_dmn_list_tx AS DBT_BUS_DMN_LIST_TX FROM t3_fcc_datamart_access.V_FCC_M_CUST ECM_A1_CUST) E ON d.dbt_cust_intrl_id = e.custintrlid LEFT OUTER JOIN (SELECT ecm_a1_cust.cust_intrl_id AS CUSTINTRLID, ecm_a1_cust.jrsdcn_cd AS  CDT_JRSDCN_CD, ecm_a1_cust.bus_dmn_list_tx AS CDT_BUS_DMN_LIST_TX FROM t3_fcc_datamart_access.V_FCC_M_CUST ECM_A1_CUST) F ON b.cdt_cust_intrl_id = f.custintrlid
+UNION ALL
+SELECT
+a.data_dump_dt
+,a.trxn_intrl_ref_id
+,a.trxn_type1_cd
+,a.trxn_type2_cd
+,a.fcc_src_sys_cd
+,a.fcc_src_cntry_cd
+,a.src_sys_cd
+,a.trxn_post_dt
+,a.trxn_dep_dt
+,a.trxn_base_am
+,a.bank_to_bank_trnfr_fl
+,a.prdct_risk_nb
+,a.chanl_risk_nb
+,a.trxn_chanl_cd
+,a.process_date
+,a.prcsng_batch_nm
+,a.fcc_src_tbl_nam
+,a.trxn_postg_tm
+,a.trxn_dep_tm
+,a.trxn_type3_cd
+,a.trxn_type4_cd
+,a.trxn_asset_class_cd
+,a.trxn_purp_cd
+,a.trxn_prdct_cd
+,a.trxn_adjst_cd
+,a.mantas_trxn_chanl_cd
+,a.trxn_prdct_sub_type_cd
+,a.trxn_chanl_risk_nb
+,a.trxn_chanl_geo_loc
+,a.trxn_chanl_loc_type
+,a.trxn_chanl_loc_id
+,a.trxn_chanl_loc_nm
+,a.trxn_chanl_loc_addr
+,a.bank_card_id_nb
+,a.trxn_entry_ntwk_logon_id
+,a.trxn_entry_user_intrl_id
+,a.rptng_crncy_cd
+,a.trxn_rptng_am
+,e.dbt_jrsdcn_cd
+,f.cdt_jrsdcn_cd
+,e.dbt_bus_dmn_list_tx
+,f.cdt_bus_dmn_list_tx
+,a.trxn_seq_id
+,a.fcc_src_trxn_intrl_ref_id
+,a.dbt_cdt_cd
+,a.trxn_type_cd
+,a.dbt_acct_intrl_id
+,a.fcc_src_dbt_acct_intrl_id
+,a.cdt_acct_intrl_id
+,a.fcc_src_cdt_acct_intrl_id
+,b.cdt_cust_intrl_id
+,d.dbt_cust_intrl_id
+,a.trxn_exctn_dt
+,a.trxn_exctn_tm
+,a.trxn_exctn_utc_dt
+,a.trxn_exctn_utc_tm
+,a.trxn_actvy_am
+FROM (SELECT
+ecm_a2_mitrxn.datadumpdt AS DATA_DUMP_DT,
+ecm_a2_mitrxn.trxnintrlrefid AS TRXN_INTRL_REF_ID,
+ecm_a2_mitrxn.trxntype1cd AS TRXN_TYPE1_CD,
+ecm_a2_mitrxn.trxntype2cd AS TRXN_TYPE2_CD,
+'MANTAS' AS FCC_SRC_SYS_CD,
+CASE WHEN SUBSTR(ecm_a2_mitrxn.prcsngbatchnm,3,6) ='DETICA' OR SUBSTR(ecm_a2_mitrxn.prcsngbatchnm,3,3) ='DLY' THEN SUBSTR(ecm_a2_mitrxn.trxnintrlrefid,1,2)
+WHEN ecm_a2_mitrxn.prcsngbatchnm = 'TRDPORT' OR ecm_a2_mitrxn.prcsngbatchnm ='TRDSAM' THEN SUBSTR(ecm_a2_mitrxn.srcsyscd,1,2)
+ELSE SUBSTR(ecm_a2_mitrxn.trxnintrlrefid,1,2) END AS FCC_SRC_CNTRY_CD,
+ecm_a2_mitrxn.srcsyscd AS SRC_SYS_CD,
+ecm_a2_mitrxn.trxnpostdt AS TRXN_POST_DT,
+ecm_a2_mitrxn.trxndepdt AS TRXN_DEP_DT,
+ecm_a2_mitrxn.trxnbaseam AS TRXN_BASE_AM,
+ecm_a2_mitrxn.banktobanktrnfrfl AS BANK_TO_BANK_TRNFR_FL,
+ecm_a2_mitrxn.prdctrisknb AS PRDCT_RISK_NB,
+ecm_a2_mitrxn.chanlrisknb AS CHANL_RISK_NB,
+ecm_a2_mitrxn.trxnchanlcd AS TRXN_CHANL_CD,
+ecm_a2_mitrxn.ods AS PROCESS_DATE,
+ecm_a2_mitrxn.prcsngbatchnm AS PRCSNG_BATCH_NM,
+'ECM_A2_MITRXN' AS FCC_SRC_TBL_NAM,
+ecm_a2_mitrxn.trxnpostgtm AS TRXN_POSTG_TM,
+ecm_a2_mitrxn.trxndeptm AS TRXN_DEP_TM,
+ecm_a2_mitrxn.trxntype3cd AS TRXN_TYPE3_CD,
+ecm_a2_mitrxn.trxntype4cd AS TRXN_TYPE4_CD,
+ecm_a2_mitrxn.mantastrxnassetclasscd AS TRXN_ASSET_CLASS_CD,
+ecm_a2_mitrxn.mantastrxnpurpcd AS TRXN_PURP_CD,
+ecm_a2_mitrxn.mantastrxnprdctcd AS TRXN_PRDCT_CD,
+ecm_a2_mitrxn.mantastrxnadjstcd AS TRXN_ADJST_CD,
+ecm_a2_mitrxn.mantastrxnchanlcd AS MANTAS_TRXN_CHANL_CD,
+ecm_a2_mitrxn.mantastrxnprdctsubtypecd AS TRXN_PRDCT_SUB_TYPE_CD,
+ecm_a2_mitrxn.mantastrxnchanlrisknb AS TRXN_CHANL_RISK_NB,
+ecm_a2_mitrxn.mantastrxnchanlgeoloc AS TRXN_CHANL_GEO_LOC,
+ecm_a2_mitrxn.mantastrxnchanlloctype AS TRXN_CHANL_LOC_TYPE,
+ecm_a2_mitrxn.mantastrxnchanllocid AS TRXN_CHANL_LOC_ID,
+ecm_a2_mitrxn.mantastrxnchanllocnm AS TRXN_CHANL_LOC_NM,
+ecm_a2_mitrxn.mantastrxnchanllocaddr AS TRXN_CHANL_LOC_ADDR,
+ecm_a2_mitrxn.bankcardidnb AS BANK_CARD_ID_NB,
+ecm_a2_mitrxn.trxnentryntwklogonid AS TRXN_ENTRY_NTWK_LOGON_ID,
+ecm_a2_mitrxn.trxnentryuserintrlid AS TRXN_ENTRY_USER_INTRL_ID,
+ecm_a2_mitrxn.rptngcrncycd AS RPTNG_CRNCY_CD,
+ecm_a2_mitrxn.trxnrptngam AS TRXN_RPTNG_AM,
+ecm_a2_mitrxn.fotrxnseqid AS TRXN_SEQ_ID,
+ecm_a2_mitrxn.trxnintrlrefid AS FCC_SRC_TRXN_INTRL_REF_ID,
+ecm_a2_mitrxn.initrolecd AS DBT_CDT_CD,
+'MI' AS TRXN_TYPE_CD,
+CASE 
+WHEN ecm_a2_mitrxn.remacctidtypecd IN ('IA') or ecm_a2_mitrxn.remacctidtypecd IN ('IA') THEN ecm_a2_mitrxn.remacctid 
+ELSE NULL 
+END AS DBT_ACCT_INTRL_ID,
+CASE 
+WHEN ecm_a2_mitrxn.remacctidtypecd IN ('IA') or ecm_a2_mitrxn.remacctidtypecd IN ('IA') THEN ecm_a2_mitrxn.remacctid 
+ELSE NULL 
+END AS FCC_SRC_DBT_ACCT_INTRL_ID,
+CASE 
+WHEN ecm_a2_mitrxn.benefacctidtypecd IN ('IA') AND ecm_a2_mitrxn.benefacctid IS NOT NULL THEN ecm_a2_mitrxn.benefacctid 
+WHEN ecm_a2_mitrxn.scndbenefacctidtypecd IN ('IA') AND ecm_a2_mitrxn.scndbenefacctid IS NOT NULL THEN ecm_a2_mitrxn.scndbenefacctid 
+WHEN ecm_a2_mitrxn.benefacctidtypecd IN ('GL') AND ecm_a2_mitrxn.benefacctid IS NOT NULL THEN ecm_a2_mitrxn.benefacctid 
+WHEN ecm_a2_mitrxn.scndbenefacctidtypecd IN ('GL') AND ecm_a2_mitrxn.scndbenefacctid IS NOT NULL THEN ecm_a2_mitrxn.scndbenefacctid 
+ELSE NULL 
+END AS CDT_ACCT_INTRL_ID,
+CASE 
+WHEN ecm_a2_mitrxn.benefacctidtypecd IN ('IA') AND ecm_a2_mitrxn.benefacctid IS NOT NULL THEN ecm_a2_mitrxn.benefacctid 
+WHEN ecm_a2_mitrxn.scndbenefacctidtypecd IN ('IA') AND ecm_a2_mitrxn.scndbenefacctid IS NOT NULL THEN ecm_a2_mitrxn.scndbenefacctid 
+WHEN ecm_a2_mitrxn.benefacctidtypecd IN ('GL') AND ecm_a2_mitrxn.benefacctid IS NOT NULL THEN ecm_a2_mitrxn.benefacctid 
+WHEN ecm_a2_mitrxn.scndbenefacctidtypecd IN ('GL') AND ecm_a2_mitrxn.scndbenefacctid IS NOT NULL THEN ecm_a2_mitrxn.scndbenefacctid 
+ELSE NULL 
+END AS FCC_SRC_CDT_ACCT_INTRL_ID,
+ecm_a2_mitrxn.trxnissuedt AS TRXN_EXCTN_DT,
+ecm_a2_mitrxn.trxnissuetm AS TRXN_EXCTN_TM,
+ecm_a2_mitrxn.trxnissueutcdt AS TRXN_EXCTN_UTC_DT,
+ecm_a2_mitrxn.trxnissueutctm AS TRXN_EXCTN_UTC_TM,
+CASE
+WHEN ecm_a2_mitrxn.issuetrxnactvyam IS NOT NULL THEN ecm_a2_mitrxn.issuetrxnactvyam
+WHEN ecm_a2_mitrxn.issuetrxnactvyam IS NULL AND ecm_a2_mitrxn.deptrxnactvyam IS NOT NULL THEN ecm_a2_mitrxn.deptrxnactvyam
+WHEN ecm_a2_mitrxn.deptrxnactvyam IS NULL AND ecm_a2_mitrxn.remtrxnactvyam IS NOT NULL THEN ecm_a2_mitrxn.remtrxnactvyam
+WHEN ecm_a2_mitrxn.remtrxnactvyam IS NULL AND ecm_a2_mitrxn.beneftrxnactvyam IS NOT NULL THEN ecm_a2_mitrxn.beneftrxnactvyam
+WHEN ecm_a2_mitrxn.beneftrxnactvyam IS NULL THEN NULL 
+ELSE NULL
+END AS TRXN_ACTVY_AM
+FROM FCCV_MANTAS_A2_VIEWS.V_ECM_A2_MITRXN ECM_A2_MITRXN) A LEFT OUTER JOIN (SELECT ecm_a1_acct.acct_intrl_id AS ACCTINTRLID, ecm_a1_acct.prmry_cust_intrl_id AS CDT_CUST_INTRL_ID FROM t3_fcc_datamart_access.V_FCC_M_ACCT ECM_A1_ACCT) B ON a.cdt_acct_intrl_id = b.acctintrlid  LEFT OUTER JOIN (SELECT ecm_a1_acct.acct_intrl_id AS ACCTINTRLID, ecm_a1_acct.prmry_cust_intrl_id AS DBT_CUST_INTRL_ID FROM t3_fcc_datamart_access.V_FCC_M_ACCT ECM_A1_ACCT)D ON a.dbt_acct_intrl_id = d.acctintrlid LEFT OUTER JOIN (SELECT ecm_a1_cust.cust_intrl_id AS CUSTINTRLID, ecm_a1_cust.jrsdcn_cd AS DBT_JRSDCN_CD, ecm_a1_cust.bus_dmn_list_tx AS DBT_BUS_DMN_LIST_TX FROM t3_fcc_datamart_access.V_FCC_M_CUST ECM_A1_CUST) E ON d.dbt_cust_intrl_id = e.custintrlid LEFT OUTER JOIN (SELECT ecm_a1_cust.cust_intrl_id AS CUSTINTRLID, ecm_a1_cust.jrsdcn_cd AS  CDT_JRSDCN_CD, ecm_a1_cust.bus_dmn_list_tx AS CDT_BUS_DMN_LIST_TX FROM t3_fcc_datamart_access.V_FCC_M_CUST ECM_A1_CUST) F ON b.cdt_cust_intrl_id = f.custintrlid
+UNION ALL
+SELECT
+a.data_dump_dt
+,a.trxn_intrl_ref_id
+,a.trxn_type1_cd
+,a.trxn_type2_cd
+,a.fcc_src_sys_cd
+,a.fcc_src_cntry_cd
+,a.src_sys_cd
+,a.trxn_post_dt
+,a.trxn_dep_dt
+,a.trxn_base_am
+,a.bank_to_bank_trnfr_fl
+,a.prdct_risk_nb
+,a.chanl_risk_nb
+,a.trxn_chanl_cd
+,a.process_date
+,a.prcsng_batch_nm
+,a.fcc_src_tbl_nam
+,a.trxn_postg_tm
+,a.trxn_dep_tm
+,a.trxn_type3_cd
+,a.trxn_type4_cd
+,a.trxn_asset_class_cd
+,a.trxn_purp_cd
+,a.trxn_prdct_cd
+,a.trxn_adjst_cd
+,a.mantas_trxn_chanl_cd
+,a.trxn_prdct_sub_type_cd
+,a.trxn_chanl_risk_nb
+,a.trxn_chanl_geo_loc
+,a.trxn_chanl_loc_type
+,a.trxn_chanl_loc_id
+,a.trxn_chanl_loc_nm
+,a.trxn_chanl_loc_addr
+,a.bank_card_id_nb
+,a.trxn_entry_ntwk_logon_id
+,a.trxn_entry_user_intrl_id
+,a.rptng_crncy_cd
+,a.trxn_rptng_am
+,e.dbt_jrsdcn_cd
+,f.cdt_jrsdcn_cd
+,e.dbt_bus_dmn_list_tx
+,f.cdt_bus_dmn_list_tx
+,a.trxn_seq_id
+,a.fcc_src_trxn_intrl_ref_id
+,a.dbt_cdt_cd
+,a.trxn_type_cd
+,a.dbt_acct_intrl_id
+,a.fcc_src_dbt_acct_intrl_id
+,a.cdt_acct_intrl_id
+,a.fcc_src_cdt_acct_intrl_id
+,b.cdt_cust_intrl_id
+,d.dbt_cust_intrl_id
+,a.trxn_exctn_dt
+,a.trxn_exctn_tm
+,a.trxn_exctn_utc_dt
+,a.trxn_exctn_utc_tm
+,a.trxn_actvy_am
+FROM (SELECT
+ecm_a3_mitrxn.datadumpdt AS DATA_DUMP_DT,
+ecm_a3_mitrxn.trxnintrlrefid AS TRXN_INTRL_REF_ID,
+ecm_a3_mitrxn.trxntype1cd AS TRXN_TYPE1_CD,
+ecm_a3_mitrxn.trxntype2cd AS TRXN_TYPE2_CD,
+'MANTAS' AS FCC_SRC_SYS_CD,
+CASE WHEN SUBSTR(ecm_a3_mitrxn.prcsngbatchnm,3,6) ='DETICA' OR SUBSTR(ecm_a3_mitrxn.prcsngbatchnm,3,3) ='DLY' THEN SUBSTR(ecm_a3_mitrxn.trxnintrlrefid,1,2)
+WHEN ecm_a3_mitrxn.prcsngbatchnm = 'TRDPORT' OR ecm_a3_mitrxn.prcsngbatchnm ='TRDSAM' THEN SUBSTR(ecm_a3_mitrxn.srcsyscd,1,2)
+ELSE SUBSTR(ecm_a3_mitrxn.trxnintrlrefid,1,2) END AS FCC_SRC_CNTRY_CD,
+ecm_a3_mitrxn.srcsyscd AS SRC_SYS_CD,
+ecm_a3_mitrxn.trxnpostdt AS TRXN_POST_DT,
+ecm_a3_mitrxn.trxndepdt AS TRXN_DEP_DT,
+ecm_a3_mitrxn.trxnbaseam AS TRXN_BASE_AM,
+ecm_a3_mitrxn.banktobanktrnfrfl AS BANK_TO_BANK_TRNFR_FL,
+ecm_a3_mitrxn.prdctrisknb AS PRDCT_RISK_NB,
+ecm_a3_mitrxn.chanlrisknb AS CHANL_RISK_NB,
+ecm_a3_mitrxn.trxnchanlcd AS TRXN_CHANL_CD,
+ecm_a3_mitrxn.ods AS PROCESS_DATE,
+ecm_a3_mitrxn.prcsngbatchnm AS PRCSNG_BATCH_NM,
+'ECM_A3_MITRXN' AS FCC_SRC_TBL_NAM,
+ecm_a3_mitrxn.trxnpostgtm AS TRXN_POSTG_TM,
+ecm_a3_mitrxn.trxndeptm AS TRXN_DEP_TM,
+ecm_a3_mitrxn.trxntype3cd AS TRXN_TYPE3_CD,
+ecm_a3_mitrxn.trxntype4cd AS TRXN_TYPE4_CD,
+ecm_a3_mitrxn.mantastrxnassetclasscd AS TRXN_ASSET_CLASS_CD,
+ecm_a3_mitrxn.mantastrxnpurpcd AS TRXN_PURP_CD,
+ecm_a3_mitrxn.mantastrxnprdctcd AS TRXN_PRDCT_CD,
+ecm_a3_mitrxn.mantastrxnadjstcd AS TRXN_ADJST_CD,
+ecm_a3_mitrxn.mantastrxnchanlcd AS MANTAS_TRXN_CHANL_CD,
+ecm_a3_mitrxn.mantastrxnprdctsubtypecd AS TRXN_PRDCT_SUB_TYPE_CD,
+ecm_a3_mitrxn.mantastrxnchanlrisknb AS TRXN_CHANL_RISK_NB,
+ecm_a3_mitrxn.mantastrxnchanlgeoloc AS TRXN_CHANL_GEO_LOC,
+ecm_a3_mitrxn.mantastrxnchanlloctype AS TRXN_CHANL_LOC_TYPE,
+ecm_a3_mitrxn.mantastrxnchanllocid AS TRXN_CHANL_LOC_ID,
+ecm_a3_mitrxn.mantastrxnchanllocnm AS TRXN_CHANL_LOC_NM,
+ecm_a3_mitrxn.mantastrxnchanllocaddr AS TRXN_CHANL_LOC_ADDR,
+ecm_a3_mitrxn.bankcardidnb AS BANK_CARD_ID_NB,
+ecm_a3_mitrxn.trxnentryntwklogonid AS TRXN_ENTRY_NTWK_LOGON_ID,
+ecm_a3_mitrxn.trxnentryuserintrlid AS TRXN_ENTRY_USER_INTRL_ID,
+ecm_a3_mitrxn.rptngcrncycd AS RPTNG_CRNCY_CD,
+ecm_a3_mitrxn.trxnrptngam AS TRXN_RPTNG_AM,
+ecm_a3_mitrxn.fotrxnseqid AS TRXN_SEQ_ID,
+ecm_a3_mitrxn.trxnintrlrefid AS FCC_SRC_TRXN_INTRL_REF_ID,
+ecm_a3_mitrxn.initrolecd AS DBT_CDT_CD,
+'MI' AS TRXN_TYPE_CD,
+CASE 
+WHEN ecm_a3_mitrxn.remacctidtypecd IN ('IA') or ecm_a3_mitrxn.remacctidtypecd IN ('IA') THEN ecm_a3_mitrxn.remacctid 
+ELSE NULL 
+END AS DBT_ACCT_INTRL_ID,
+CASE 
+WHEN ecm_a3_mitrxn.remacctidtypecd IN ('IA') or ecm_a3_mitrxn.remacctidtypecd IN ('IA') THEN ecm_a3_mitrxn.remacctid 
+ELSE NULL 
+END AS FCC_SRC_DBT_ACCT_INTRL_ID,
+CASE 
+WHEN ecm_a3_mitrxn.benefacctidtypecd IN ('IA') AND ecm_a3_mitrxn.benefacctid IS NOT NULL THEN ecm_a3_mitrxn.benefacctid 
+WHEN ecm_a3_mitrxn.scndbenefacctidtypecd IN ('IA') AND ecm_a3_mitrxn.scndbenefacctid IS NOT NULL THEN ecm_a3_mitrxn.scndbenefacctid 
+WHEN ecm_a3_mitrxn.benefacctidtypecd IN ('GL') AND ecm_a3_mitrxn.benefacctid IS NOT NULL THEN ecm_a3_mitrxn.benefacctid 
+WHEN ecm_a3_mitrxn.scndbenefacctidtypecd IN ('GL') AND ecm_a3_mitrxn.scndbenefacctid IS NOT NULL THEN ecm_a3_mitrxn.scndbenefacctid 
+ELSE NULL 
+END AS CDT_ACCT_INTRL_ID,
+CASE 
+WHEN ecm_a3_mitrxn.benefacctidtypecd IN ('IA') AND ecm_a3_mitrxn.benefacctid IS NOT NULL THEN ecm_a3_mitrxn.benefacctid 
+WHEN ecm_a3_mitrxn.scndbenefacctidtypecd IN ('IA') AND ecm_a3_mitrxn.scndbenefacctid IS NOT NULL THEN ecm_a3_mitrxn.scndbenefacctid 
+WHEN ecm_a3_mitrxn.benefacctidtypecd IN ('GL') AND ecm_a3_mitrxn.benefacctid IS NOT NULL THEN ecm_a3_mitrxn.benefacctid 
+WHEN ecm_a3_mitrxn.scndbenefacctidtypecd IN ('GL') AND ecm_a3_mitrxn.scndbenefacctid IS NOT NULL THEN ecm_a3_mitrxn.scndbenefacctid 
+ELSE NULL 
+END AS FCC_SRC_CDT_ACCT_INTRL_ID,
+ecm_a3_mitrxn.trxnissuedt AS TRXN_EXCTN_DT,
+ecm_a3_mitrxn.trxnissuetm AS TRXN_EXCTN_TM,
+ecm_a3_mitrxn.trxnissueutcdt AS TRXN_EXCTN_UTC_DT,
+ecm_a3_mitrxn.trxnissueutctm AS TRXN_EXCTN_UTC_TM,
+CASE
+WHEN ecm_a3_mitrxn.issuetrxnactvyam IS NOT NULL Then ecm_a3_mitrxn.issuetrxnactvyam
+WHEN ecm_a3_mitrxn.issuetrxnactvyam is null then ecm_a3_mitrxn.deptrxnactvyam
+WHEN ecm_a3_mitrxn.deptrxnactvyam is not null then ecm_a3_mitrxn.deptrxnactvyam
+WHEN ecm_a3_mitrxn.deptrxnactvyam is null then ecm_a3_mitrxn.remtrxnactvyam
+WHEN ecm_a3_mitrxn.remtrxnactvyam is not null then ecm_a3_mitrxn.remtrxnactvyam
+WHEN ecm_a3_mitrxn.remtrxnactvyam is null then ecm_a3_mitrxn.beneftrxnactvyam
+WHEN ecm_a3_mitrxn.beneftrxnactvyam is not null then ecm_a3_mitrxn.beneftrxnactvyam
+WHEN ecm_a3_mitrxn.beneftrxnactvyam is null then null
+END AS TRXN_ACTVY_AM
+FROM FCCV_MANTAS_A3_VIEWS.V_ECM_A3_MITRXN ECM_A3_MITRXN) A LEFT OUTER JOIN (SELECT ecm_a1_acct.acct_intrl_id AS ACCTINTRLID, ecm_a1_acct.prmry_cust_intrl_id AS CDT_CUST_INTRL_ID FROM t3_fcc_datamart_access.V_FCC_M_ACCT ECM_A1_ACCT) B ON a.cdt_acct_intrl_id = b.acctintrlid  LEFT OUTER JOIN (SELECT ecm_a1_acct.acct_intrl_id AS ACCTINTRLID, ecm_a1_acct.prmry_cust_intrl_id AS DBT_CUST_INTRL_ID FROM t3_fcc_datamart_access.V_FCC_M_ACCT ECM_A1_ACCT)D ON a.dbt_acct_intrl_id = d.acctintrlid LEFT OUTER JOIN (SELECT ecm_a1_cust.cust_intrl_id AS CUSTINTRLID, ecm_a1_cust.jrsdcn_cd AS DBT_JRSDCN_CD, ecm_a1_cust.bus_dmn_list_tx AS DBT_BUS_DMN_LIST_TX FROM t3_fcc_datamart_access.V_FCC_M_CUST ECM_A1_CUST) E ON d.dbt_cust_intrl_id = e.custintrlid LEFT OUTER JOIN (SELECT ecm_a1_cust.cust_intrl_id AS CUSTINTRLID, ecm_a1_cust.jrsdcn_cd AS  CDT_JRSDCN_CD, ecm_a1_cust.bus_dmn_list_tx AS CDT_BUS_DMN_LIST_TX FROM t3_fcc_datamart_access.V_FCC_M_CUST ECM_A1_CUST) F ON b.cdt_cust_intrl_id = f.custintrlid; 
