@@ -1,0 +1,415 @@
+
+CREATE or replace VIEW t3_fcc_datamart_access.v_fcc_wiretrxnarc AS SELECT
+k.fo_trxn_seq_id
+,k.process_date
+,k.data_dump_dt
+,k.trxn_intrl_ref_id
+,k.trxn_type1_cd
+,k.trxn_type2_cd
+,k.fcc_src_sys_cd
+,k.fcc_src_cntry_cd
+,k.trxn_exctn_dt
+,k.trxn_base_am
+,k.frgn_trxn_fl
+,k.bank_to_bank_trnfr_fl
+,k.pass_thru_fl
+,k.orig_nm
+,k.orig_aug_nm
+,k.orig_acct_id
+,k.orig_acct_id_type_cd
+,k.orig_addr_mstr_seq_id
+,k.orig_ntity_risk_nb
+,k.orig_actvy_risk_nb
+,k.benef_nm
+,k.benef_aug_nm
+,k.benef_acct_id
+,k.benef_acct_id_type_cd
+,k.benef_addr_mstr_seq_id
+,k.benef_ntity_risk_nb
+,k.benef_actvy_risk_nb
+,k.orig_to_benef_instr_tx
+,k.send_instn_id
+,k.send_instn_nm
+,k.send_instn_aug_nm
+,k.send_instn_id_type_cd
+,k.send_instn_seq_id
+,k.send_instn_acct_id
+,k.send_instn_addr_mstr_seq_id
+,k.send_crncy_cd
+,k.send_trxn_actvy_am
+,k.send_fee_actvy_am
+,k.send_instn_ntity_risk_nb
+,k.send_instn_actvy_risk_nb
+,k.rcv_instn_id
+,k.rcv_instn_nm
+,k.rcv_instn_aug_nm
+,k.rcv_instn_id_type_cd
+,k.rcv_instn_seq_id
+,k.rcv_instn_acct_id
+,k.rcv_instn_addr_mstr_seq_id
+,k.rcv_crncy_cd
+,k.rcv_trxn_actvy_am
+,k.rcv_fee_actvy_am
+,k.rcv_instn_ntity_risk_nb
+,k.rcv_instn_actvy_risk_nb
+,k.bank_to_bank_instr_tx
+,k.scnd_orig_nm
+,k.scnd_orig_aug_nm
+,k.scnd_orig_acct_id
+,k.scnd_orig_acct_id_type_cd
+,k.scnd_orig_deriv_mthd_tx
+,k.scnd_orig_addr_mstr_seq_id
+,k.scnd_orig_ntity_risk_nb
+,k.scnd_orig_actvy_risk_nb
+,k.scnd_benef_nm
+,k.scnd_benef_aug_nm
+,k.scnd_benef_acct_id
+,k.scnd_benef_acct_id_type_cd
+,k.scnd_benef_deriv_mthd_tx
+,k.scnd_benef_addr_mstr_seq_id
+,k.scnd_benef_ntity_risk_nb
+,k.scnd_benef_actvy_risk_nb
+,k.unkwn_orig_fl
+,k.unkwn_benef_fl
+,k.unkwn_scnd_benef_fl
+,k.intrl_orig_acct_fl
+,k.intrl_benef_acct_fl
+,k.intrl_scnd_benef_acct_fl
+,k.send_instn_rlshp_cd
+,k.rcv_instn_rlshp_cd
+,k.prdct_risk_nb
+,k.chanl_risk_nb
+,k.trxn_chanl_cd
+,k.prcsng_batch_nm
+,k.fcc_src_tbl_nam
+,k.trxn_exctn_tm
+,k.trxn_exctn_tm_offst_tx
+,k.trxn_exctn_utc_dt
+,k.trxn_exctn_utc_tm
+,k.unkwn_scnd_orig_fl
+,k.intrl_scnd_orig_acct_fl
+,k.trxn_type3_cd
+,k.trxn_type4_cd
+,k.trxn_asset_class_cd
+,k.trxn_purp_cd
+,k.trxn_prdct_cd
+,k.trxn_adjst_cd
+,k.mantas_trxn_chanl_cd
+,k.orig_extrl_ntity_seq_id
+,k.scnd_orig_extrl_ntity_seq_id
+,k.benef_extrl_ntity_seq_id
+,k.scnd_benef_extrl_ntity_seq_id
+,k.orig_ntity_risk_factr_tx
+,k.orig_ntity_list_src_cd
+,k.orig_ntity_list_match_tx
+,k.benef_ntity_risk_factr_tx
+,k.benef_ntity_list_src_cd
+,k.benef_ntity_list_match_tx
+,k.send_instn_ntity_risk_factr_tx
+,k.send_instn_ntity_list_src_cd
+,k.send_instn_ntity_list_match_tx
+,k.rcv_instn_ntity_risk_factr_tx
+,k.rcv_instn_ntity_list_src_cd
+,k.rcv_instn_ntity_list_match_tx
+,k.scnd_orig_ntity_risk_factr_tx
+,k.scnd_orig_ntity_list_src_cd
+,k.scnd_orig_ntity_list_match_tx
+,k.scnd_benef_ntity_risk_factr_tx
+,k.scnd_benef_ntity_list_src_cd
+,k.scnd_benef_ntity_list_match_tx
+,k.unrltd_party_fl
+,k.cxl_pair_trxn_intrl_id
+,k.rebkd_trxn_intrl_id
+,k.deal_intrl_id
+,k.pymnt_int_rt
+,k.pymnt_int_rt_type_cd
+,k.fix_dt
+,k.scrty_intrl_id
+,k.unit_qt
+,k.bene_acctg_rule_cd
+,k.orig_acctg_rule_cd
+,k.prdct_ctgry_cd
+,k.prdct_type_cd
+,k.prdct_sub_type_cd
+,k.rstrn_scrty_fl
+,k.trstd_trxn_fl
+,k.orig_benef_trstd_fl
+,k.orig_scnd_benef_trstd_fl
+,k.scnd_orig_benef_trstd_fl
+,k.scnd_orig_scnd_benef_trstd_fl
+,k.trxn_prdct_sub_type_cd
+,k.trxn_chanl_dtl_1_tx
+,k.trxn_chanl_dtl_2_tx
+,k.trxn_chanl_dtl_3_tx
+,k.trxn_chanl_dtl_4_tx
+,k.trxn_chanl_dtl_5_tx
+,k.trxn_chanl_dtl_6_tx
+,k.trxn_chanl_dtl_7_tx
+,k.trxn_chanl_dtl_8_tx
+,k.trxn_chanl_dtl_9_tx
+,k.trxn_chanl_dtl_10_tx
+,k.trxn_chanl_risk_nb
+,k.trxn_chanl_geo_loc
+,k.trxn_chanl_loc_type
+,k.trxn_chanl_loc_id
+,k.trxn_chanl_loc_nm
+,k.trxn_chanl_loc_addr
+,k.bank_card_id_nb
+,k.trxn_entry_ntwk_logon_id
+,k.trxn_entry_user_intrl_id
+,k.init_role_cd
+,k.local_instr_cd
+,k.prprtry_cd
+,k.orig_id_class_cd
+,k.orig_id_issur_nm
+,k.orig_res_cntry_cd
+,k.orig_addr_purp_cd
+,k.orig_addr_bldng_nb
+,k.orig_dept_nm
+,k.orig_sub_dept_nm
+,k.benef_id_class_cd
+,k.benef_id_issur_nm
+,k.benef_res_cntry_cd
+,k.benef_addr_purp_cd
+,k.benef_addr_bldng_nb
+,k.benef_dept_nm
+,k.benef_sub_dept_nm
+,k.orig_crncy_cd
+,k.orig_trxn_actvy_am
+,k.benef_crncy_cd
+,k.benef_trxn_actvy_am
+,k.scnd_orig_crncy_cd
+,k.scnd_orig_trxn_actvy_am
+,k.scnd_benef_crncy_cd
+,k.scnd_benef_trxn_actvy_am
+,k.max_in_geo_risk_nb
+,k.max_out_geo_risk_nb
+,k.trd_fin_cntrct_intrl_id
+,k.doc_coll_cntrct_intrl_id
+,k.rptng_crncy_cd
+,k.trxn_rptng_am
+,CASE WHEN k.dummyacctid1=acct.acct_intrl_id AND k.dummyacctid1 IS NOT NULL THEN cust.jrsdcn_cd
+ELSE NULL END AS DBT_JRSDCN_CD
+,CASE WHEN k.dummyacctid2=acct.acct_intrl_id AND k.dummyacctid2 IS NOT NULL THEN cust.jrsdcn_cd
+ELSE NULL END AS CDT_JRSDCN_CD
+,CASE WHEN k.dummyacctid1=acct.acct_intrl_id AND k.dummyacctid1 IS NOT NULL THEN cust.bus_dmn_list_tx
+ELSE NULL END AS DBT_BUS_DMN_LIST_TX
+,CASE WHEN k.dummyacctid2=acct.acct_intrl_id AND k.dummyacctid2 IS NOT NULL THEN cust.bus_dmn_list_tx
+ELSE NULL END AS CDT_BUS_DMN_LIST_TX
+FROM ( SELECT wiretrxnarc.fotrxnseqid AS FO_TRXN_SEQ_ID,
+wiretrxnarc.datadumpdt AS DATA_DUMP_DT,
+wiretrxnarc.trxnintrlrefid AS TRXN_INTRL_REF_ID,
+wiretrxnarc.trxntype1cd AS TRXN_TYPE1_CD,
+wiretrxnarc.trxntype2cd AS TRXN_TYPE2_CD ,
+CASE WHEN  SUBSTR(wiretrxnarc.prcsngbatchnm,3,6) ='DETICA' THEN 'DETICA'
+WHEN SUBSTR(wiretrxnarc.prcsngbatchnm,3,3) ='DLY' THEN 'MANTAS'
+WHEN SUBSTR(wiretrxnarc.prcsngbatchnm,3,1)='T' OR SUBSTR(wiretrxnarc.prcsngbatchnm,3,6)='TRDSAM' THEN 'TRDSAM'
+WHEN SUBSTR(wiretrxnarc.prcsngbatchnm,3,1) ='3' OR SUBSTR(wiretrxnarc.prcsngbatchnm,3,5)='CCAML' THEN 'CCAML'
+WHEN SUBSTR(wiretrxnarc.prcsngbatchnm,3,1) ='2' OR SUBSTR(wiretrxnarc.prcsngbatchnm,3,7)='TRDPORT' THEN 'TRDPORT'
+ELSE wiretrxnarc.prcsngbatchnm END AS FCC_SRC_SYS_CD,
+CASE WHEN  SUBSTR(wiretrxnarc.prcsngbatchnm,3,6) ='DETICA' OR SUBSTR(wiretrxnarc.prcsngbatchnm,3,3) ='DLY' THEN SUBSTR(wiretrxnarc.trxnintrlrefid,1,2)
+WHEN wiretrxnarc.prcsngbatchnm = 'TRDPORT' OR wiretrxnarc.prcsngbatchnm ='TRDSAM' THEN SUBSTR(wiretrxnarc.prcsngbatchnm,1,2)
+ELSE SUBSTR(wiretrxnarc.trxnintrlrefid,1,2) END AS FCC_SRC_CNTRY_CD,
+wiretrxnarc.trxnexctndt AS TRXN_EXCTN_DT,
+wiretrxnarc.trxnbaseam AS TRXN_BASE_AM,
+wiretrxnarc.frgntrxnfl AS FRGN_TRXN_FL,
+wiretrxnarc.banktobanktrnfrfl AS BANK_TO_BANK_TRNFR_FL,
+wiretrxnarc.passthrufl AS PASS_THRU_FL,
+wiretrxnarc.orignm AS ORIG_NM,
+wiretrxnarc.origaugnm AS ORIG_AUG_NM,
+wiretrxnarc.origacctid AS ORIG_ACCT_ID,
+wiretrxnarc.origacctidtypecd AS ORIG_ACCT_ID_TYPE_CD,
+wiretrxnarc.origaddrmstrseqid AS ORIG_ADDR_MSTR_SEQ_ID,
+wiretrxnarc.origntityrisknb AS ORIG_NTITY_RISK_NB,
+wiretrxnarc.origactvyrisknb AS ORIG_ACTVY_RISK_NB,
+wiretrxnarc.benefnm AS BENEF_NM,
+wiretrxnarc.benefaugnm AS BENEF_AUG_NM,
+wiretrxnarc.benefacctid AS BENEF_ACCT_ID,
+wiretrxnarc.benefacctidtypecd AS BENEF_ACCT_ID_TYPE_CD,
+wiretrxnarc.benefaddrmstrseqid AS BENEF_ADDR_MSTR_SEQ_ID,
+wiretrxnarc.benefntityrisknb AS BENEF_NTITY_RISK_NB,
+wiretrxnarc.benefactvyrisknb AS BENEF_ACTVY_RISK_NB,
+wiretrxnarc.origtobenefinstrtx AS ORIG_TO_BENEF_INSTR_TX,
+wiretrxnarc.sendinstnid AS SEND_INSTN_ID,
+wiretrxnarc.sendinstnnm AS SEND_INSTN_NM,
+wiretrxnarc.sendinstnaugnm AS SEND_INSTN_AUG_NM,
+wiretrxnarc.sendinstnidtypecd AS SEND_INSTN_ID_TYPE_CD,
+wiretrxnarc.sendinstnseqid AS SEND_INSTN_SEQ_ID,
+wiretrxnarc.sendinstnacctid AS SEND_INSTN_ACCT_ID,
+wiretrxnarc.sendinstnaddrmstrseqid AS SEND_INSTN_ADDR_MSTR_SEQ_ID,
+wiretrxnarc.sendcrncycd AS SEND_CRNCY_CD,
+wiretrxnarc.sendtrxnactvyam AS SEND_TRXN_ACTVY_AM,
+wiretrxnarc.sendfeeactvyam AS SEND_FEE_ACTVY_AM,
+wiretrxnarc.sendinstnntityrisknb AS SEND_INSTN_NTITY_RISK_NB,
+wiretrxnarc.sendinstnactvyrisknb AS SEND_INSTN_ACTVY_RISK_NB,
+wiretrxnarc.rcvinstnid AS RCV_INSTN_ID,
+wiretrxnarc.rcvinstnnm AS RCV_INSTN_NM,
+wiretrxnarc.rcvinstnaugnm AS RCV_INSTN_AUG_NM,
+wiretrxnarc.rcvinstnidtypecd AS RCV_INSTN_ID_TYPE_CD,
+wiretrxnarc.rcvinstnseqid AS RCV_INSTN_SEQ_ID,
+wiretrxnarc.rcvinstnacctid AS RCV_INSTN_ACCT_ID,
+wiretrxnarc.rcvinstnaddrmstrseqid AS RCV_INSTN_ADDR_MSTR_SEQ_ID,
+wiretrxnarc.rcvcrncycd AS RCV_CRNCY_CD,
+wiretrxnarc.rcvtrxnactvyam AS RCV_TRXN_ACTVY_AM,
+wiretrxnarc.rcvfeeactvyam AS RCV_FEE_ACTVY_AM,
+wiretrxnarc.rcvinstnntityrisknb AS RCV_INSTN_NTITY_RISK_NB,
+wiretrxnarc.rcvinstnactvyrisknb AS RCV_INSTN_ACTVY_RISK_NB,
+wiretrxnarc.banktobankinstrtx AS BANK_TO_BANK_INSTR_TX,
+wiretrxnarc.scndorignm AS SCND_ORIG_NM,
+wiretrxnarc.scndorigaugnm AS SCND_ORIG_AUG_NM,
+wiretrxnarc.scndorigacctid AS SCND_ORIG_ACCT_ID,
+wiretrxnarc.scndorigacctidtypecd AS SCND_ORIG_ACCT_ID_TYPE_CD,
+wiretrxnarc.scndorigderivmthdtx AS SCND_ORIG_DERIV_MTHD_TX,
+wiretrxnarc.scndorigaddrmstrseqid AS SCND_ORIG_ADDR_MSTR_SEQ_ID,
+wiretrxnarc.scndorigntityrisknb AS SCND_ORIG_NTITY_RISK_NB,
+wiretrxnarc.scndorigactvyrisknb AS SCND_ORIG_ACTVY_RISK_NB,
+wiretrxnarc.scndbenefnm AS SCND_BENEF_NM,
+wiretrxnarc.scndbenefaugnm AS SCND_BENEF_AUG_NM,
+wiretrxnarc.scndbenefacctid AS SCND_BENEF_ACCT_ID,
+wiretrxnarc.scndbenefacctidtypecd AS SCND_BENEF_ACCT_ID_TYPE_CD,
+wiretrxnarc.scndbenefderivmthdtx AS SCND_BENEF_DERIV_MTHD_TX,
+wiretrxnarc.scndbenefaddrmstrseqid AS SCND_BENEF_ADDR_MSTR_SEQ_ID,
+wiretrxnarc.scndbenefntityrisknb AS SCND_BENEF_NTITY_RISK_NB,
+wiretrxnarc.scndbenefactvyrisknb AS SCND_BENEF_ACTVY_RISK_NB,
+wiretrxnarc.unkwnorigfl AS UNKWN_ORIG_FL,
+wiretrxnarc.unkwnbeneffl AS UNKWN_BENEF_FL,
+wiretrxnarc.unkwnscndbeneffl AS UNKWN_SCND_BENEF_FL,
+wiretrxnarc.intrlorigacctfl AS INTRL_ORIG_ACCT_FL,
+wiretrxnarc.intrlbenefacctfl AS INTRL_BENEF_ACCT_FL,
+wiretrxnarc.intrlscndbenefacctfl AS INTRL_SCND_BENEF_ACCT_FL,
+wiretrxnarc.sendinstnrlshpcd AS SEND_INSTN_RLSHP_CD,
+wiretrxnarc.rcvinstnrlshpcd AS RCV_INSTN_RLSHP_CD,
+wiretrxnarc.prdctrisknb AS PRDCT_RISK_NB,
+wiretrxnarc.chanlrisknb AS CHANL_RISK_NB,
+wiretrxnarc.trxnchanlcd AS TRXN_CHANL_CD,
+wiretrxnarc.prcsngbatchnm AS PRCSNG_BATCH_NM,
+'ECM_ALL_WIRETRXNARC' AS FCC_SRC_TBL_NAM,
+wiretrxnarc.trxnexctntm AS TRXN_EXCTN_TM,
+wiretrxnarc.trxnexctntmoffsttx AS TRXN_EXCTN_TM_OFFST_TX,
+wiretrxnarc.trxnexctnutcdt AS TRXN_EXCTN_UTC_DT,
+wiretrxnarc.trxnexctnutctm AS TRXN_EXCTN_UTC_TM,
+wiretrxnarc.unkwnscndorigfl AS UNKWN_SCND_ORIG_FL,
+wiretrxnarc.intrlscndorigacctfl AS INTRL_SCND_ORIG_ACCT_FL,
+wiretrxnarc.trxntype3cd AS TRXN_TYPE3_CD,
+wiretrxnarc.trxntype4cd AS TRXN_TYPE4_CD,
+wiretrxnarc.mantastrxnassetclasscd AS TRXN_ASSET_CLASS_CD,
+wiretrxnarc.mantastrxnpurpcd AS TRXN_PURP_CD,
+wiretrxnarc.mantastrxnprdctcd AS TRXN_PRDCT_CD,
+wiretrxnarc.mantastrxnadjstcd AS TRXN_ADJST_CD,
+wiretrxnarc.mantastrxnchanlcd AS MANTAS_TRXN_CHANL_CD,
+wiretrxnarc.origextrlntityseqid AS ORIG_EXTRL_NTITY_SEQ_ID,
+wiretrxnarc.scndorigextrlntityseqid AS SCND_ORIG_EXTRL_NTITY_SEQ_ID,
+wiretrxnarc.benefextrlntityseqid AS BENEF_EXTRL_NTITY_SEQ_ID,
+wiretrxnarc.scndbenefextrlntityseqid AS SCND_BENEF_EXTRL_NTITY_SEQ_ID,
+wiretrxnarc.origntityriskfactrtx AS ORIG_NTITY_RISK_FACTR_TX,
+wiretrxnarc.origntitylistsrccd AS ORIG_NTITY_LIST_SRC_CD,
+wiretrxnarc.origntitylistmatchtx AS ORIG_NTITY_LIST_MATCH_TX,
+wiretrxnarc.benefntityriskfactrtx AS BENEF_NTITY_RISK_FACTR_TX,
+wiretrxnarc.benefntitylistsrccd AS BENEF_NTITY_LIST_SRC_CD,
+wiretrxnarc.benefntitylistmatchtx AS BENEF_NTITY_LIST_MATCH_TX,
+wiretrxnarc.sendinstnntityriskfactrtx  AS SEND_INSTN_NTITY_RISK_FACTR_TX,
+wiretrxnarc.sendinstnntitylistsrccd AS SEND_INSTN_NTITY_LIST_SRC_CD,
+wiretrxnarc.sendinstnntitylistmatchtx AS SEND_INSTN_NTITY_LIST_MATCH_TX,
+wiretrxnarc.rcvinstnntityriskfactrtx AS RCV_INSTN_NTITY_RISK_FACTR_TX,
+wiretrxnarc.rcvinstnntitylistsrccd AS RCV_INSTN_NTITY_LIST_SRC_CD,
+wiretrxnarc.rcvinstnntitylistmatchtx AS RCV_INSTN_NTITY_LIST_MATCH_TX,
+wiretrxnarc.scndorigntityriskfactrtx AS SCND_ORIG_NTITY_RISK_FACTR_TX,
+wiretrxnarc.scndorigntitylistsrccd AS SCND_ORIG_NTITY_LIST_SRC_CD,
+wiretrxnarc.scndorigntitylistmatchtx AS SCND_ORIG_NTITY_LIST_MATCH_TX,
+wiretrxnarc.scndbenefntityriskfactrtx AS SCND_BENEF_NTITY_RISK_FACTR_TX,
+wiretrxnarc.scndbenefntitylistsrccd AS SCND_BENEF_NTITY_LIST_SRC_CD,
+wiretrxnarc.scndbenefntitylistmatchtx AS SCND_BENEF_NTITY_LIST_MATCH_TX,
+wiretrxnarc.unrltdpartyfl AS UNRLTD_PARTY_FL,
+wiretrxnarc.cxlpairtrxnintrlid AS CXL_PAIR_TRXN_INTRL_ID,
+wiretrxnarc.rebkdtrxnintrlid AS REBKD_TRXN_INTRL_ID,
+wiretrxnarc.dealintrlid AS DEAL_INTRL_ID,
+wiretrxnarc.pymntintrt AS PYMNT_INT_RT,
+wiretrxnarc.pymntintrttypecd AS PYMNT_INT_RT_TYPE_CD,
+wiretrxnarc.fixdt AS FIX_DT,
+wiretrxnarc.scrtyintrlid AS SCRTY_INTRL_ID,
+wiretrxnarc.unitqt AS UNIT_QT,
+wiretrxnarc.beneacctgrulecd AS BENE_ACCTG_RULE_CD,
+wiretrxnarc.origacctgrulecd AS ORIG_ACCTG_RULE_CD,
+wiretrxnarc.prdctctgrycd AS PRDCT_CTGRY_CD,
+wiretrxnarc.prdcttypecd AS PRDCT_TYPE_CD,
+wiretrxnarc.prdctsubtypecd AS PRDCT_SUB_TYPE_CD,
+wiretrxnarc.rstrnscrtyfl AS RSTRN_SCRTY_FL,
+wiretrxnarc.trstdtrxnfl AS TRSTD_TRXN_FL,
+wiretrxnarc.origbeneftrstdfl AS ORIG_BENEF_TRSTD_FL,
+wiretrxnarc.origscndbeneftrstdfl AS ORIG_SCND_BENEF_TRSTD_FL,
+wiretrxnarc.scndorigbeneftrstdfl AS SCND_ORIG_BENEF_TRSTD_FL,
+wiretrxnarc.scndorigscndbeneftrstdfl AS SCND_ORIG_SCND_BENEF_TRSTD_FL,
+wiretrxnarc.mantastrxnprdctsubtypecd AS TRXN_PRDCT_SUB_TYPE_CD,
+wiretrxnarc.mantastrxnchanldtl1tx AS TRXN_CHANL_DTL_1_TX,
+wiretrxnarc.mantastrxnchanldtl2tx AS TRXN_CHANL_DTL_2_TX,
+wiretrxnarc.mantastrxnchanldtl3tx AS TRXN_CHANL_DTL_3_TX,
+wiretrxnarc.mantastrxnchanldtl4tx AS TRXN_CHANL_DTL_4_TX,
+wiretrxnarc.mantastrxnchanldtl5tx AS TRXN_CHANL_DTL_5_TX,
+wiretrxnarc.mantastrxnchanldtl6tx AS TRXN_CHANL_DTL_6_TX,
+wiretrxnarc.mantastrxnchanldtl7tx AS TRXN_CHANL_DTL_7_TX,
+wiretrxnarc.mantastrxnchanldtl8tx AS TRXN_CHANL_DTL_8_TX,
+wiretrxnarc.mantastrxnchanldtl9tx AS TRXN_CHANL_DTL_9_TX,
+wiretrxnarc.mantastrxnchanldtl10tx AS TRXN_CHANL_DTL_10_TX,
+wiretrxnarc.mantastrxnchanlrisknb AS TRXN_CHANL_RISK_NB,
+wiretrxnarc.mantastrxnchanlgeoloc AS TRXN_CHANL_GEO_LOC,
+wiretrxnarc.mantastrxnchanlloctype AS TRXN_CHANL_LOC_TYPE,
+wiretrxnarc.mantastrxnchanllocid AS TRXN_CHANL_LOC_ID,
+wiretrxnarc.mantastrxnchanllocnm AS TRXN_CHANL_LOC_NM,
+wiretrxnarc.mantastrxnchanllocaddr AS TRXN_CHANL_LOC_ADDR,
+wiretrxnarc.bankcardidnb AS BANK_CARD_ID_NB,
+wiretrxnarc.trxnentryntwklogonid AS TRXN_ENTRY_NTWK_LOGON_ID,
+wiretrxnarc.trxnentryuserintrlid AS TRXN_ENTRY_USER_INTRL_ID,
+wiretrxnarc.initrolecd AS INIT_ROLE_CD,
+wiretrxnarc.localinstrcd AS LOCAL_INSTR_CD,
+wiretrxnarc.prprtrycd AS PRPRTRY_CD,
+wiretrxnarc.origidclasscd AS ORIG_ID_CLASS_CD,
+wiretrxnarc.origidissurnm AS ORIG_ID_ISSUR_NM,
+wiretrxnarc.origrescntrycd AS ORIG_RES_CNTRY_CD,
+wiretrxnarc.origaddrpurpcd AS ORIG_ADDR_PURP_CD,
+wiretrxnarc.origaddrbldngnb AS ORIG_ADDR_BLDNG_NB,
+wiretrxnarc.origdeptnm AS ORIG_DEPT_NM,
+wiretrxnarc.origsubdeptnm AS ORIG_SUB_DEPT_NM,
+wiretrxnarc.benefidclasscd AS BENEF_ID_CLASS_CD,
+wiretrxnarc.benefidissurnm AS BENEF_ID_ISSUR_NM,
+wiretrxnarc.benefrescntrycd AS BENEF_RES_CNTRY_CD,
+wiretrxnarc.benefaddrpurpcd AS BENEF_ADDR_PURP_CD,
+wiretrxnarc.benefaddrbldngnb AS BENEF_ADDR_BLDNG_NB,
+wiretrxnarc.benefdeptnm AS BENEF_DEPT_NM,
+wiretrxnarc.benefsubdeptnm AS BENEF_SUB_DEPT_NM,
+wiretrxnarc.origcrncycd AS ORIG_CRNCY_CD,
+wiretrxnarc.origtrxnactvyam AS ORIG_TRXN_ACTVY_AM,
+wiretrxnarc.benefcrncycd AS BENEF_CRNCY_CD,
+wiretrxnarc.beneftrxnactvyam AS BENEF_TRXN_ACTVY_AM,
+wiretrxnarc.scndorigcrncycd AS SCND_ORIG_CRNCY_CD,
+wiretrxnarc.scndorigtrxnactvyam AS SCND_ORIG_TRXN_ACTVY_AM,
+wiretrxnarc.scndbenefcrncycd AS SCND_BENEF_CRNCY_CD,
+wiretrxnarc.scndbeneftrxnactvyam AS SCND_BENEF_TRXN_ACTVY_AM,
+wiretrxnarc.maxingeorisknb AS MAX_IN_GEO_RISK_NB,
+wiretrxnarc.maxoutgeorisknb AS MAX_OUT_GEO_RISK_NB,
+wiretrxnarc.trdfincntrctintrlid AS TRD_FIN_CNTRCT_INTRL_ID,
+wiretrxnarc.doccollcntrctintrlid AS DOC_COLL_CNTRCT_INTRL_ID,
+wiretrxnarc.rptngcrncycd AS RPTNG_CRNCY_CD,
+wiretrxnarc.trxnrptngam AS TRXN_RPTNG_AM,
+wiretrxnarc.ods AS PROCESS_DATE ,
+CASE 
+WHEN wiretrxnarc.sendinstnidtypecd IN ('IA','GL') AND wiretrxnarc.sendinstnidtypecd IS NOT NULL THEN wiretrxnarc.sendinstnid
+WHEN wiretrxnarc.origacctidtypecd IN ('IA','GL') AND wiretrxnarc.origacctidtypecd IS NOT NULL THEN wiretrxnarc.origacctid
+WHEN wiretrxnarc.scndorigacctidtypecd IN ('IA','GL') AND wiretrxnarc.scndorigacctidtypecd IS NOT NULL  THEN wiretrxnarc.scndorigacctid
+WHEN wiretrxnarc.rcvinstnidtypecd IN ('IA','GL') AND wiretrxnarc.rcvinstnidtypecd IS NOT NULL THEN wiretrxnarc.rcvinstnid
+WHEN wiretrxnarc.benefacctidtypecd IN ('IA','GL') AND wiretrxnarc.benefacctidtypecd IS NOT NULL THEN wiretrxnarc.benefacctid
+WHEN wiretrxnarc.scndbenefacctidtypecd IN ('IA','GL') AND wiretrxnarc.scndbenefacctidtypecd IS NOT NULL  THEN wiretrxnarc.scndbenefacctid
+ELSE NULL END AS DUMMYACCTID,
+CASE WHEN wiretrxnarc.sendinstnidtypecd IN ('IA','GL') AND wiretrxnarc.sendinstnidtypecd IS NOT NULL THEN wiretrxnarc.sendinstnid
+WHEN wiretrxnarc.origacctidtypecd IN ('IA','GL') AND wiretrxnarc.origacctidtypecd IS NOT NULL THEN wiretrxnarc.origacctid
+WHEN wiretrxnarc.scndorigacctidtypecd IN ('IA','GL') AND wiretrxnarc.scndorigacctidtypecd IS NOT NULL  THEN wiretrxnarc.scndorigacctid
+ELSE NULL END AS DUMMYACCTID1,
+CASE WHEN wiretrxnarc.rcvinstnidtypecd IN ('IA','GL') AND wiretrxnarc.rcvinstnidtypecd IS NOT NULL THEN wiretrxnarc.rcvinstnid
+WHEN wiretrxnarc.benefacctidtypecd IN ('IA','GL') AND wiretrxnarc.benefacctidtypecd IS NOT NULL THEN wiretrxnarc.benefacctid
+WHEN wiretrxnarc.scndbenefacctidtypecd IN ('IA','GL') AND wiretrxnarc.scndbenefacctidtypecd IS NOT NULL  THEN wiretrxnarc.scndbenefacctid
+ELSE NULL END AS DUMMYACCTID2
+FROM FCCV_ECM_VIEWS.V_ECM_ALL_WIRETRXNARC WIRETRXNARC
+) K
+LEFT OUTER JOIN t3_fcc_datamart_access.V_FCC_M_ACCT ACCT
+ON k.dummyacctid=acct.acct_intrl_id
+LEFT OUTER JOIN t3_fcc_datamart_access.V_FCC_M_CUST CUST
+ON acct.prmry_cust_intrl_id=cust.cust_intrl_id;
